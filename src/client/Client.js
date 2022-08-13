@@ -18,12 +18,12 @@ class Client extends EventEmitter {
       return console.log('Client Already Run')
     }
 
+    var updates = []
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
-      console.log(denora)
-      //updates = denora.result.sort((a, b) => b.update_id - a.update_id)
+      updates = denora.result.sort((a, b) => b.update_id - a.update_id)
     })
 
-    //console.log(updates.toString())
+    console.log(updates.toString())
     /*
     setInterval(function() {
       
