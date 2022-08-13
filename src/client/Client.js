@@ -1,6 +1,6 @@
 class Client {
-  constructor(data) {
-    this.token = token || null
+  constructor(options) {
+    this.token = options?.token || null;
     this._active = false
   }
 
