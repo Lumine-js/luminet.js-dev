@@ -42,17 +42,17 @@ class Client extends EventEmitter {
       await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
         if (denora.result.length > 0) {
           updates = denora.result.sort((a, b) => b.update_id - a.update_id)
+          var newev = updates.filter(x => x.update_id > latest)
+          if (newev) {
+            latest = newev[0].update_id
+            await newev.forEach(nm => {
+              if (nm?.message) {
+                this.emit('messageCreate', new Message(nm.message))
+              }
+            })
+          }
         }
       })
-      var newev = updates.filter(x => x.update_id > latest)
-      if (newev) {
-        latest = newev[0].update_id
-        await newev.forEach(nm => {
-          if (nm?.message) {
-            this.emit('messageCreate', new Message(nm.message))
-          }
-        })
-      }
     }.bind(this), 1000)
 
   }
