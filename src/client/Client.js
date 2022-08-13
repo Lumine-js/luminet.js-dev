@@ -23,7 +23,7 @@ class Client extends EventEmitter {
       //updates = denora.result.sort((a, b) => b.update_id - a.update_id)
     })
 
-    console.log(updates.toString())
+    //console.log(updates.toString())
     /*
     setInterval(function() {
       
@@ -40,7 +40,6 @@ class Client extends EventEmitter {
     if (body) ccpn.body = body
 
     await axios(ccpn).then(x => {
-      console.log(x.data)
       return x.data
     }).catch(x => {
       console.log(`[ERROR] ${x}`)
