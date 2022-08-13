@@ -59,7 +59,7 @@ class Client extends EventEmitter {
 
   async requestAPI(method, endpoint, parameter) {
     var ccpn = {
-      url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
+      url: `http://api.telegram.org/bot${this.token}/${endpoint}`,
       method: method,
       headers: {
         "Accept": "application/json",
