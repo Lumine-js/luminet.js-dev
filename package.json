@@ -3,7 +3,6 @@
   "author":"Kanaka Nakazawa",
   "version":"v1.0.0-experimental",
   "dependencies":{
-    "ws": "^8.5.0",
     "axios": "^0.25.0"
   }
 }
