@@ -30,12 +30,14 @@ class Client extends EventEmitter {
         updates = denora.result.sort((a, b) => b.update_id - a.update_id)
       })
       var newev = updates.filter(x => x.update_id > latest)
-      latest = newev[0].update_id
-      await newev.forEach(nm => {
-        if (nm?.message) {
-          this.emit('messageCreate', nm.message)
-        }
-      })
+      if (newev.length > 0) {
+        latest = newev[0].update_id
+        await newev.forEach(nm => {
+          if (nm?.message) {
+            this.emit('messageCreate', nm.message)
+          }
+        })
+      }
     }.bind(this), 1000)
 
   }
