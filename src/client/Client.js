@@ -18,7 +18,7 @@ class Client extends EventEmitter {
     }
     
     
-    var denora = requestUpdates()
+    var denora = this.requestUpdates()
     var updates = numbers.sort((a, b) => b.update_id - a.update_id)
     console.log(updates.toString())
     
