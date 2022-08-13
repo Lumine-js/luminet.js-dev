@@ -18,10 +18,7 @@ class Client extends EventEmitter {
       return console.log('Client Already Run')
     }
 
-    await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
-      console.log(denora)
-      //updates = denora.result.sort((a, b) => b.update_id - a.update_id)
-    })
+    console.log(await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()))
 
     //console.log(updates.toString())
     /*
