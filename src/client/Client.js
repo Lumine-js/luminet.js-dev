@@ -31,7 +31,7 @@ class Client extends EventEmitter {
   }
 
   requestUpdates() {
-    var cdl = await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate())
+    var cdl = this.requestAPI("GET", Constants.ENDPOINTS.getUpdate())
     return cdl.result
   }
 
