@@ -31,7 +31,7 @@ class Client extends EventEmitter {
   }
 
   requestUpdates() {
-    return this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).result
+    return this.requestAPI("GET", Constants.ENDPOINTS.getUpdate())
   }
 
   requestAPI(method, endpoint, body) {
