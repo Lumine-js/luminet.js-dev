@@ -7,6 +7,7 @@ const { EventEmitter } = require("node:events")
 //========= CLASS
 class Client extends EventEmitter {
   constructor(options) {
+    super()
     this.token = options?.token || null;
     this._active = false
   }
