@@ -69,8 +69,6 @@ class Client extends EventEmitter {
       })
     }
 
-    if (body) ccpn.body = body
-
     return axios(ccpn).then(x => {
       return x.data
     }).catch(x => {
