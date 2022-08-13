@@ -4,6 +4,7 @@ const Constants = require("./../util/constants.js")
 //========== PACKAGE
 const { EventEmitter } = require("node:events")
 
+const axios = require("axios")
 //========= CLASS
 class Client extends EventEmitter {
   constructor(options) {
