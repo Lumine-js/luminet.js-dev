@@ -36,7 +36,7 @@ class Client extends EventEmitter {
 
   requestAPI(method, endpoint, body) {
     var ccpn = {
-      url: `https://api.telegram.org/bot${token}/${endpoint}`,
+      url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
       method: method
     }
 
