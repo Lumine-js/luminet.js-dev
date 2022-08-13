@@ -34,7 +34,9 @@ class Client extends EventEmitter {
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
       updates = denora.result.sort((a, b) => b.update_id - a.update_id)
-      latest = updates[0].update_id
+      if(updates.length === 0) {
+        latest = updates[0].update_id
+      }
     })
     setInterval(async function() {
       await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
@@ -64,7 +66,7 @@ class Client extends EventEmitter {
     }
     
     if(parameter) {
-      await parameter.forEach((x, u) => {
+      await parameter.forEach((x, u)=> {
         ccpn.url = ccpn.url + `${(u === 0) ? "?" : "&"}${x.title}=${encodeURIComponent(x.body)}`
       })
     }
