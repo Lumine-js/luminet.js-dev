@@ -31,7 +31,7 @@ class Client extends EventEmitter {
   }
 
   requestUpdates() {
-    var cdl = this.requestAPI("GET", Constants.ENDPOINTS.getUpdate())
+    var cdl = await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate())
     return cdl.result
   }
 
@@ -44,6 +44,7 @@ class Client extends EventEmitter {
     if (body) ccpn.body = body
 
     axios(ccpn).then(x => {
+      console.log(x.data)
       return x.data
     }).catch(x => {
       console.log(`[ERROR] ${x}`)
