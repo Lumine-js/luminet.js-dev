@@ -28,7 +28,7 @@ class Client extends EventEmitter {
 
   }
 
-  async requestAPI(method, endpoint, body) {
+  requestAPI(method, endpoint, body) {
     var ccpn = {
       url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
       method: method
@@ -36,7 +36,7 @@ class Client extends EventEmitter {
 
     if (body) ccpn.body = body
 
-    await axios(ccpn).then(x => {
+    axios(ccpn).then(x => {
       return x.data
     }).catch(x => {
       console.log(`[ERROR] ${x}`)
