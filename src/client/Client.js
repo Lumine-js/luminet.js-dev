@@ -1,4 +1,11 @@
-class Client {
+//========== STRUCTURE DATA
+const Constants = require("./../util/constants.js")
+
+//========== PACKAGE
+const { EventEmitter } = require("node:events")
+
+//========= CLASS
+class Client extends EventEmitter {
   constructor(options) {
     this.token = options?.token || null;
     this._active = false
@@ -22,7 +29,7 @@ class Client {
   }
 
   requestUpdates() {
-    var cdl = this.requestAPI("GET", ENDPOINTS.getUpdate())
+    var cdl = this.requestAPI("GET", Constants.ENDPOINTS.getUpdate())
     return cdl.result
   }
 
