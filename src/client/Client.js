@@ -33,14 +33,14 @@ class Client extends EventEmitter {
     await this.requestAPI("GET", Constants.ENDPOINTS.getMe()).then(x => this.emit("ready", new UserClient(x.result)))
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
-      if (denora.result) {
+      if (denora.result.length > 0) {
         updates = denora.result.sort((a, b) => b.update_id - a.update_id)
         latest = updates[0].update_id
       }
     })
     setInterval(async function() {
       await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
-        if (denora.result) {
+        if (denora.result.length > 0) {
           updates = denora.result.sort((a, b) => b.update_id - a.update_id)
         }
       })
