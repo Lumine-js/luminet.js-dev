@@ -13,15 +13,18 @@ class Client extends EventEmitter {
     this._active = false
   }
 
-  login(token) {
+  async login(token) {
     if (this._active) {
       return console.log('Client Already Run')
     }
     
+    var update
+    this.requestUpdates().then(x => {
+      updates = denora.result.sort((a, b) => b.update_id - a.update_id)
+      console.log(updates.toString())
+    })
     
-    var denora = this.requestUpdates()
-    var updates = denora.result.sort((a, b) => b.update_id - a.update_id)
-    console.log(updates.toString())
+    
     
     /*
     setInterval(function() {
@@ -30,11 +33,11 @@ class Client extends EventEmitter {
 
   }
 
-  requestUpdates() {
-    return this.requestAPI("GET", Constants.ENDPOINTS.getUpdate())
+  async requestUpdates() {
+    return this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(x => x)
   }
 
-  requestAPI(method, endpoint, body) {
+  async requestAPI(method, endpoint, body) {
     var ccpn = {
       url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
       method: method
