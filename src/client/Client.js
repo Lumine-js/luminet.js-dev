@@ -34,7 +34,7 @@ class Client extends EventEmitter {
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
       updates = denora.result.sort((a, b) => b.update_id - a.update_id)
-      if(updates.length === 0) {
+      if(updates.length > 0) {
         latest = updates[0].update_id
       }
     })
