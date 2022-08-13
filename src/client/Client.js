@@ -19,7 +19,7 @@ class Client extends EventEmitter {
     }
     
     var update
-    this.requestUpdates().then(x => {
+    this.requestUpdates().then(denora => {
       updates = denora.result.sort((a, b) => b.update_id - a.update_id)
       console.log(updates.toString())
     })
