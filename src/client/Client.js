@@ -56,11 +56,7 @@ class Client extends EventEmitter {
   async requestAPI(method, endpoint, parameter) {
     var ccpn = {
       url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
-      method: method,
-      headers: {
-        "Accept": "application/json",
-        "Content-type": "application/json"
-      }
+      method: method
     }
     
     if(parameter) {
@@ -68,6 +64,8 @@ class Client extends EventEmitter {
         ccpn.url = ccpn.url + `?${x.title}=${encodeURIComponent(x.body)}`
       })
     }
+    
+    console.log(ccpn)
 
     return axios(ccpn).then(x => {
       return x.data
