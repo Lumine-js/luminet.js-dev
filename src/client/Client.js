@@ -53,7 +53,7 @@ class Client extends EventEmitter {
 
   }
 
-  async requestAPI(method, endpoint, body) {
+  async requestAPI(method, endpoint, parameter) {
     var ccpn = {
       url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
       method: method,
@@ -61,6 +61,12 @@ class Client extends EventEmitter {
         "Accept": "application/json",
         "Content-type": "application/json"
       }
+    }
+    
+    if(parameter) {
+      await parameter.forEach(x => {
+        ccpn.url = ccpn.url + `?${x.title}=${encodeURIComponent(x.body)}`
+      })
     }
 
     if (body) ccpn.body = body
@@ -73,7 +79,9 @@ class Client extends EventEmitter {
   }
 
   sendMessage(channelId, content) {
-    this.requestAPI("POST", Constants.ENDPOINTS.sendMessage(), { chat_id: channelId, text: content })
+    this.requestAPI("POST", Constants.ENDPOINTS.sendMessage(), [
+      { title:"chat_id",body: channelId},
+      { title:"text", body:content }])
   }
 }
 
