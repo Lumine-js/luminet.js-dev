@@ -31,6 +31,8 @@ class Client extends EventEmitter {
     var latest = 0;
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getMe()).then(x => this.emit("ready", new UserClient(x.result)))
+    
+    await this.requestAPI("GET", Constante.ENDPOINTS.setWebhook())
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then((denora) => {
       if (denora.result.length > 0) {
@@ -38,14 +40,14 @@ class Client extends EventEmitter {
         latest = updates[0].update_id
       }
     })
-    setInterval(async function() {
-      await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(async (denora) => {
-        if (denora?.result?.length > 0) {
+    setInterval(function() {
+      return this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then((denora) => {
+            if (denora.result.length > 0) {
           updates = denora.result.sort((a, b) => b.update_id - a.update_id)
           var newev = updates.filter(x => x.update_id > latest)
           if (newev) {
             latest = newev[0].update_id
-            await newev.forEach(nm => {
+            return newev.forEach(nm => {
               if (nm?.message) {
                 this.emit('messageCreate', new Message(nm.message))
               }
@@ -59,7 +61,7 @@ class Client extends EventEmitter {
 
   async requestAPI(method, endpoint, parameter) {
     var ccpn = {
-      url: `http://api.telegram.org/bot${this.token}/${endpoint}`,
+      url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
       method: method,
       headers: {
         "Accept": "application/json",
