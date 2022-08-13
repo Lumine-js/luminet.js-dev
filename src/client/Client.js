@@ -13,7 +13,7 @@ class Client extends EventEmitter {
     this._active = false
   }
 
-  async login(token) {
+  login(token) {
     if (this._active) {
       return console.log('Client Already Run')
     }
@@ -33,11 +33,11 @@ class Client extends EventEmitter {
 
   }
 
-  async requestUpdates() {
-    return this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(x => x)
+  requestUpdates() {
+    return this.requestAPI("GET", Constants.ENDPOINTS.getUpdate())
   }
 
-  async requestAPI(method, endpoint, body) {
+  requestAPI(method, endpoint, body) {
     var ccpn = {
       url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
       method: method
