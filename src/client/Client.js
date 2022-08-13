@@ -1,6 +1,8 @@
 //========== STRUCTURE DATA
 const Constants = require("./../util/constants.js")
 
+const Message = require("./../structure/Message.js")
+const UserClient = require("./../structure/UserClient.js")
 //========== PACKAGE
 const { EventEmitter } = require("node:events")
 
@@ -11,15 +13,24 @@ class Client extends EventEmitter {
     super()
     this.token = options?.token || null;
     this._active = false
+    this.on("ready", (user) => {
+      const packg = require("./../../package.json")
+      console.log(`====== Lumine.js (Project)\n${packg.name} - ${packg.version}\n\nNow Login To ${user.username}\n======`)
+    })
   }
 
   async login(token) {
+    if (!this.token) {
+      return console.log("Token Invalid")
+    }
     if (this._active) {
       return console.log('Client Already Run')
     }
 
     var updates = []
     var latest = 0;
+
+    await this.requestAPI("GET", Constants.ENDPOINTS.getMe()).then(x => this.emit("ready", new UserClient(x.result)))
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
       updates = denora.result.sort((a, b) => b.update_id - a.update_id)
@@ -34,7 +45,7 @@ class Client extends EventEmitter {
         latest = newev[0].update_id
         await newev.forEach(nm => {
           if (nm?.message) {
-            this.emit('messageCreate', nm.message)
+            this.emit('messageCreate', new Message(nm.message))
           }
         })
       }
@@ -45,7 +56,11 @@ class Client extends EventEmitter {
   async requestAPI(method, endpoint, body) {
     var ccpn = {
       url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
-      method: method
+      method: method,
+      headers: {
+        "Accept": "application/json",
+        "Content-type": "application/json"
+      }
     }
 
     if (body) ccpn.body = body
@@ -55,6 +70,10 @@ class Client extends EventEmitter {
     }).catch(x => {
       console.log(`[ERROR] ${x}`)
     })
+  }
+
+  sendMessage(channelId, content) {
+    this.requestAPI("POST", Constants.ENDPOINTS.sendMessage(), { chat_id: channelId, text: content })
   }
 }
 
