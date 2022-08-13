@@ -65,7 +65,7 @@ class Client extends EventEmitter {
       })
     }
     
-    console.log(ccpn)
+    //console.log(ccpn)
 
     return axios(ccpn).then(x => {
       return x.data
@@ -75,7 +75,7 @@ class Client extends EventEmitter {
   }
 
   sendMessage(channelId, content) {
-    this.requestAPI("POST", Constants.ENDPOINTS.sendMessage(), [
+    this.requestAPI("GET", Constants.ENDPOINTS.sendMessage(), [
       { title:"chat_id",body: channelId},
       { title:"text", body:content }])
   }
