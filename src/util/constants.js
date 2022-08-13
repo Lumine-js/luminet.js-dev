@@ -1,3 +1,5 @@
 module.exports.ENDPOINTS = {
-  getUpdate: () => "getUpdates"
+  getUpdate: () => "getUpdates",
+  sendMessage: () => "sendMessage",
+  getMe: () => "getMe"
 }
