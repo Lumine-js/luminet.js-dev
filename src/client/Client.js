@@ -40,7 +40,7 @@ class Client extends EventEmitter {
     })
     setInterval(function() {
       return this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then((denora) => {
-        console.log(denora)
+        console.log(denora.result)
         if (denora.result.length > 0) {
           updates = denora.result.sort((a, b) => b.update_id - a.update_id)
           var newev = updates.filter(x => x.update_id > latest)
