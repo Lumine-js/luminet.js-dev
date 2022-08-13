@@ -19,7 +19,8 @@ class Client extends EventEmitter {
     }
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then(denora => {
-      updates = denora.result.sort((a, b) => b.update_id - a.update_id)
+      console.log(denora)
+      //updates = denora.result.sort((a, b) => b.update_id - a.update_id)
     })
 
     console.log(updates.toString())
