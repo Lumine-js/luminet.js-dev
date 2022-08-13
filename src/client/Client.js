@@ -32,7 +32,7 @@ class Client extends EventEmitter {
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getMe()).then(x => this.emit("ready", new UserClient(x.result)))
     
-    await this.requestAPI("GET", Constante.ENDPOINTS.setWebhook())
+    await this.requestAPI("GET", Constants.ENDPOINTS.setWebhook())
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then((denora) => {
       if (denora.result.length > 0) {
