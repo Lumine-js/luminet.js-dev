@@ -49,6 +49,7 @@ class Client extends EventEmitter {
           if (newev) {
             latest = newev[0].update_id
             return newev.forEach(nm => {
+              this.emit('rawEvent', nm)
               if (nm?.message) {
                 this.emit('messageCreate', new Message(nm.message))
               }
