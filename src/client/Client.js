@@ -18,6 +18,8 @@ class Client extends EventEmitter {
       console.log(`====== Lumine.js (Project)\n${packg.name} - ${packg.version}\n\nNow Login To ${user.username}\n======`)
     })
   }
+  
+  
 
   async login(token) {
     if (!this.token) {
@@ -35,8 +37,6 @@ class Client extends EventEmitter {
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getMe()).then(x => this.emit("ready", new UserClient(x.result)))
 
-    await this.requestAPI("GET", Constants.ENDPOINTS.setWebhook())
-    await this.requestAPI("GET", Constants.ENDPOINTS.deleteWebhook())
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then((denora) => {
       if (denora?.result?.length > 0) {
