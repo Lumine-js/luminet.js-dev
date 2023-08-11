@@ -21,8 +21,10 @@ class Client extends EventEmitter {
 
   async login(token) {
     if (!this.token) {
-      this.token = token
+      if(!token) {
       throw TypeError("Token Invalid")
+      }
+      this.token = token
     }
     if (this._active) {
       throw TypeError('Client Already Run')
