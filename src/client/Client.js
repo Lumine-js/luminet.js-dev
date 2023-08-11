@@ -5,8 +5,11 @@ const Message = require("./../structure/Message.js")
 const UserClient = require("./../structure/UserClient.js")
 //========== PACKAGE
 const { EventEmitter } = require("node:events")
+const fetch = require('node-fetch');
+const WebSocket = require("ws");
+const clc = require("cli-color")
+const packg = require("./../../package.json")
 
-const axios = require("axios")
 //========= CLASS
 class Client extends EventEmitter {
   constructor(options) {
@@ -15,7 +18,7 @@ class Client extends EventEmitter {
     this._active = false
     this.on("ready", (user) => {
       const packg = require("./../../package.json")
-      console.log(`====== Lumine.js (Project)\n${packg.name} - ${packg.version}\n\nNow Login To ${user.username}\n======`)
+      console.log(`Bot ${clc.bold.blue(this.user.username)} telah aktif, \nKamu menggunakan ${clc.yellow.bold(packg.name)} versi ${packg.version}.\nDokumentasi bisa diperiksa pada \n${clc.blue(`https://github.com/Lumine-js/${packg.name}`)}\n\n\n\n`)
     })
   }
 
@@ -35,7 +38,13 @@ class Client extends EventEmitter {
     var updates = []
     var latest = 0;
 
-    await this.requestAPI("GET", Constants.ENDPOINTS.getMe()).then(x => console.log(x))
+    await this.requestAPI("GET", Constants.ENDPOINTS.getMe()).then(x => {
+      if (x) {
+        this.emit("ready", new UserClient(x.result))
+      } else {
+        throw TypeError("Your token is not connected to the bot")
+      }
+    })
 
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getUpdate()).then((denora) => {
@@ -63,7 +72,6 @@ class Client extends EventEmitter {
     }.bind(this), 1000)
 
   }
-
   async requestAPI(method, endpoint, parameter) {
     var ccpn = {
       url: `https://api.telegram.org/bot${this.token}/${endpoint}`,
@@ -80,11 +88,19 @@ class Client extends EventEmitter {
       })
     }
 
-    return axios(ccpn).then(x => {
-      return x.data
-    }).catch(x => {
-      console.log(`[ERROR] ${x}`)
-    })
+    try {
+      return fetch(ccpn.url, {
+          method: ccpn.method,
+          headers: ccpn.headers
+        })
+        .then((res) => res.text())
+        .then((res) => {
+          var data = res ? JSON.parse(res) : {}
+          return data
+        })
+    } catch (err) {
+      throw new Error(err)
+    }
   }
 
   sendMessage(channelId, content) {
