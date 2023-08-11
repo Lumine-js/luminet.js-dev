@@ -2,7 +2,9 @@
   "name":"luminet.js",
   "author":"Kanaka Nakazawa",
   "version":"v1.0.0-experimental",
-  "dependencies":{
-    "axios": "^0.25.0"
+  "dependencies": {
+    "ws": "^8.5.0",
+    "node-fetch": "^2.6.9",
+    "cli-color": "^2.0.3"
   }
 }
