@@ -39,7 +39,7 @@ class Client extends EventEmitter {
     var latest = 0;
 
     await this.requestAPI("GET", Constants.ENDPOINTS.getMe()).then(x => {
-      if (x) {
+      if (x.username) {
         this.emit("ready", new UserClient(x.result))
       } else {
         throw TypeError("Your token is not connected to the bot")
