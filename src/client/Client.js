@@ -70,7 +70,7 @@ class Client extends EventEmitter {
           }
         }
       })
-    }.bind(this), 1000)
+    }.bind(this), 1500)
 
   }
   async requestAPI(method, endpoint, parameter) {
