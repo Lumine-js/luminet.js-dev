@@ -60,6 +60,7 @@ class Client extends EventEmitter {
           updates = denora.result.sort((a, b) => b.update_id - a.update_id)
           var newev = updates.filter(x => x.update_id > latest)
           if (newev) {
+            console.log(newev)
             latest = newev[0].update_id
             return newev.forEach(nm => {
               this.emit('rawEvent', nm)
